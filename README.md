@@ -1,0 +1,1 @@
+Just run main.py and grab outputs in ./parks/
