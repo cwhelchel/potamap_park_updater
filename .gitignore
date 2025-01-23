@@ -1,0 +1,5 @@
+.venv
+parks/
+outputs/
+__pycache__/
+archive/
