@@ -1,5 +1,6 @@
 .venv
 parks/
+summits/
 outputs/
 __pycache__/
 archive/
