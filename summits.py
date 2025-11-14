@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import os
 import re
@@ -90,6 +91,7 @@ def download_summit_list() -> Path:
 def _parse(row: list[str]):
     ref = row[0]
     name = row[3]
+    valid_until = row[8]  # date ex: 31/12/2099
     json = {
         "reference": ref,
         "name": name,
@@ -100,6 +102,13 @@ def _parse(row: list[str]):
         'pts': row[6],
         'bonuspts': row[7]
     }
+
+    valid_dt = datetime.strptime(valid_until, '%d/%m/%Y')
+    now = datetime.now()
+
+    if now > valid_dt:
+        print('skipping summit that is no longer valid!')
+        return
 
     # get the association and region part of the summit code
     m = re.match(r'(.*\/[A-Z]{2})-', ref)
@@ -138,7 +147,8 @@ if __name__ == "__main__":
                 float(row['Longitude']),
                 float(row['Latitude']),
                 row['Points'],
-                row['BonusPoints']
+                row['BonusPoints'],
+                row['ValidTo']
             ]
 
             if cols[0].startswith('W'):
