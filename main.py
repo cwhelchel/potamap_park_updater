@@ -21,6 +21,8 @@ from geojson import Point, Feature, FeatureCollection, dumps
 # - Cainan
 #
 
+saved_parks = []
+
 
 def convert(input: str, output: str, loc: str):
     features = []
@@ -35,6 +37,15 @@ def convert(input: str, output: str, loc: str):
             f = Feature(geometry=point, properties={
                         'NAME': park['reference'], 'TITLE': park['name']})
             features.append(f)
+
+            # save this for use by potamap.us search bar
+            saved_parks.append({
+                'reference_id': park['reference'],
+                'name': park['name'],
+                'lat': park['latitude'],
+                'lon': park['longitude'],
+                'grid': park['grid']
+            })
 
     fc = FeatureCollection(features=features, name=f"{loc} POTA PARKS")
 
@@ -101,3 +112,8 @@ if __name__ == "__main__":
         convert(file, output, location_name)
 
         shutil.move(output, newDir.joinpath(output.name))
+
+    # the conversion function builds saved_parks
+    with open('search_data.json', 'w', encoding='UTF-8') as out_file:
+        text = json.dumps(saved_parks, indent=None)
+        out_file.write(text)

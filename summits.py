@@ -27,6 +27,8 @@ from geojson import Point, Feature, FeatureCollection, dumps
 regions: list[str] = []
 summits: dict[str, list[str]] = {}
 
+search_data = []
+
 
 def convert():
     for region in summits.keys():
@@ -110,6 +112,15 @@ def _parse(row: list[str]):
         print('skipping summit that is no longer valid!')
         return
 
+    # save off search data
+    search_data.append({
+        'reference_id': ref,
+        'name': name,
+        'lat': row[5],
+        'lon': row[4],
+        'grid': ''
+    })
+
     # get the association and region part of the summit code
     m = re.match(r'(.*\/[A-Z]{2})-', ref)
     if m:
@@ -180,3 +191,8 @@ if __name__ == "__main__":
 
         # delete the file
         file.unlink(missing_ok=True)
+
+    # the parsing function loads search_data for potamap.us search bar
+    with open('summit_search_data.json', 'w', encoding='UTF-8') as out_file:
+        text = json.dumps(search_data, indent=None)
+        out_file.write(text)
