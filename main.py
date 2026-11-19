@@ -113,6 +113,10 @@ if __name__ == "__main__":
 
         shutil.move(output, newDir.joinpath(output.name))
 
+        # delete original park json
+        if file.exists():
+            file.unlink()
+
     # the conversion function builds saved_parks
     with open('search_data.json', 'w', encoding='UTF-8') as out_file:
         text = json.dumps(saved_parks, indent=None)

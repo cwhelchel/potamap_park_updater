@@ -170,6 +170,11 @@ if __name__ == "__main__":
         print('\nconverting summits to geojson...')
         convert()
 
+    # remove the download
+    csv = _get_path('summitslist.csv')
+    if csv.exists():
+        csv.unlink()
+
     print('moving files...')
 
     for file in Path("summits").glob("*.geojson"):
