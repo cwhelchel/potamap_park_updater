@@ -106,5 +106,7 @@ SUMMIT_ASSOC = {
     'US-SC': ['W4C--US.geojson'],
     'US-IN': ['W9--IN.geojson'],
     'US-IL': ['W9--IL.geojson'],
-    'US-WI': ['W9--WI.geojson']
+    'US-WI': ['W9--WI.geojson'],
+    'US-SD': ['W0D--BB.geojson','W0D--ES.geojson','W0D--MR.geojson','W0D--NW.geojson'],  # NOQA E501
+    'US-ND': ['W0D--ND.geojson'],
 }
