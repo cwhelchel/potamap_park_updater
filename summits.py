@@ -5,7 +5,7 @@ import re
 import shutil
 import requests
 import csv
-from locations import US_SUMMITS
+from locations import SUMMIT_ASSOC, US_SUMMITS
 from pathlib import Path
 from geojson import Point, Feature, FeatureCollection, dumps
 
@@ -139,7 +139,7 @@ if __name__ == "__main__":
     if not Path('summits').exists():
         os.mkdir('summits')
 
-    print('downloading summit list')
+    print('downloading summit list...')
     downloaded_fname = download_summit_list()
 
     with open(downloaded_fname, encoding='utf-8') as csv_file:
@@ -170,7 +170,7 @@ if __name__ == "__main__":
         print('\nconverting summits to geojson...')
         convert()
 
-    print('moving files')
+    print('moving files...')
 
     for file in Path("summits").glob("*.geojson"):
         output = file.with_suffix(".geojson")
@@ -191,6 +191,24 @@ if __name__ == "__main__":
 
         # delete the file
         file.unlink(missing_ok=True)
+
+    print("removing extra assoc files from state dirs... removing:")
+
+    for state, keep in SUMMIT_ASSOC.items():
+        summit_path = Path("summits", state)
+
+        to_delete = [
+            f for f in summit_path.iterdir()
+            if f.is_file() and f.name not in keep
+        ]
+
+        print(f'{state} - {to_delete}')
+
+        for file in to_delete:
+            if file.exists():
+                file.unlink(missing_ok=True)
+
+    print('writing summit search data...')
 
     # the parsing function loads search_data for potamap.us search bar
     with open('summit_search_data.json', 'w', encoding='UTF-8') as out_file:

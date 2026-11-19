@@ -84,5 +84,26 @@ US_SUMMITS = {
     "W8M": ['US-MI'],
     "W8O": ['US-OH'],
     "W8V": ['US-WV'],
-    "W9": ['US-IN', 'US-IL'],
+    "W9": ['US-IN', 'US-IL', 'US-WI'],
+}
+
+# this lists the summit files we want to KEEP for the given state.
+# this is used to cleanup summit dirs for states that are in multi-state
+# associations
+SUMMIT_ASSOC = {
+    'US-CT': ['W1--CB.geojson', 'W1--HH.geojson', 'W1--MR.geojson'],
+    'US-ME': ['W1--AM.geojson', 'W1--DI.geojson', 'W1--EM.geojson'],
+    'US-MA': ['W1--CR.geojson', 'W1--MB.geojson'],
+    'US-NH': ['W1--HA.geojson', 'W1--MV.geojson', 'W1--NL.geojson'],
+    'US-VT': ['W1--GM.geojson', 'W1--NK.geojson'],
+    'US-NY': ['W2--EH.geojson', 'W2--GA.geojson', 'W2--GC.geojson', 'W2--WE.geojson'],  # NOQA E501
+    'US-NJ': ['W2--NJ.geojson'],
+    'US-PA': ['W3--ER.geojson', 'W3--PD.geojson', 'W3--PH.geojson', 'W3--PO.geojson', 'W3--PT.geojson', 'W3--PW.geojson', 'W3--SV.geojson'],  # NOQA E501
+    'US-MD': ['W3--CT.geojson', 'W3--WE.geojson'],
+    'US-DE': [''],  # nothing to keep. all the w3 files need to get removed
+    'US-NC': ['W4--CM.geojson', 'W4--EM.geojson', 'W4--EP.geojson', 'W4--WM.geojson', 'W4--WP.geojson'],  # NOQA E501
+    'US-SC': ['W4--US.geojson'],
+    'US-IN': ['W9--IN.geojson'],
+    'US-IL': ['W9--IL.geojson'],
+    'US-WI': ['W9--WI.geojson']
 }
